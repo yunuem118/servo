@@ -140,10 +140,10 @@ def macos_plugins():
             path,
             "lib",
             "gstreamer-1.0",
-            "lib" + name + ".so"
+            "lib" + name + ".dylib"
         ) for name, path in GSTREAMER_PLUGINS + MACOS_PLUGINS
     ] + [
-        os.path.join(macos_libnice(), "gstreamer-1.0", "libgstnice.so"),
+        os.path.join(macos_libnice(), "gstreamer-1.0", "libgstnice.dylib"),
     ]
 
 
