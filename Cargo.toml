@@ -37,8 +37,8 @@ raqote = { git = "https://github.com/jdm/raqote", branch = "fkup" }
 webrender = { git = "https://github.com/jdm/webrender", branch = "crash-backtrace" }
 webrender_api = { git = "https://github.com/jdm/webrender", branch = "crash-backtrace" }
 
-[patch."https://github.com/servo/mozjs"]
-mozjs_sys = { path = "../mozjs" }
+#[patch."https://github.com/servo/mozjs"]
+#mozjs_sys = { path = "../mozjs" }
 
-[patch."https://github.com/servo/rust-mozjs"]
-mozjs = { path = "../rust-mozjs" }
+#[patch."https://github.com/servo/rust-mozjs"]
+#mozjs = { path = "../rust-mozjs" }
