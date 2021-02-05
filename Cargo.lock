@@ -3798,7 +3798,7 @@ dependencies = [
 [[package]]
 name = "mozjs_sys"
 version = "0.68.2"
-source = "git+https://github.com/servo/mozjs?branch=smuppy2#76d9e2d30388aee246e4ee9eca6c2ffc7b5ce692"
+source = "git+https://github.com/servo/mozjs?branch=smuppy2#15ba4b5c2672611413606d7d221f0dc974ce299a"
 dependencies = [
  "bindgen",
  "cc",
