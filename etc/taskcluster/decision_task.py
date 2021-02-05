@@ -130,10 +130,10 @@ windows_build_env = {
     },
     "all": {
         "PYTHON3": "%HOMEDRIVE%%HOMEPATH%\\python3\\python.exe",
-        #"PYTHONPATH": "%HOMEDRIVE%%HOMEPATH%\\python3",
-        #"PYTHONHOME": "%HOMEDRIVE%%HOMEPATH%\\python3",
         "LINKER": "lld-link.exe",
         "MOZTOOLS_PATH_PREPEND": "%HOMEDRIVE%%HOMEPATH%\\git\\cmd",
+        "CC": "clang-cl.exe",
+        "CXX": "clang-cl.exe",
     },
 }
 
