@@ -1618,7 +1618,7 @@ class PropertyDefiner:
         prefableTemplate = '    Guard::new(%s, %s[%d])'
         origTemplate = specTemplate
         if isinstance(specTemplate, str):
-            specTemplate = lambda _: origTemplate
+            specTemplate = lambda _: origTemplate  # noqa
 
         for cond, members in groupby(array, lambda m: getCondition(m, self.descriptor)):
             currentSpecs = [specTemplate(m) % getDataTuple(m) for m in members]
@@ -1844,7 +1844,11 @@ class AttrDefiner(PropertyDefiner):
         if not static and not unforgeable and not (
                 descriptor.interface.isNamespace() or descriptor.interface.isCallback()
         ):
-            self.regular.append({"name": "@@toStringTag", "attr": None, "flags": "JSPROP_READONLY | JSPROP_INTERNAL_USE_BIT"})
+            self.regular.append({
+                "name": "@@toStringTag",
+                "attr": None,
+                "flags": "JSPROP_READONLY | JSPROP_INTERNAL_USE_BIT"
+            })
 
     def generateArray(self, array, name):
         if len(array) == 0:
@@ -1932,7 +1936,6 @@ class AttrDefiner(PropertyDefiner):
                     }
                 }
 """
-
 
         return self.generateGuardedArray(
             array, name,
