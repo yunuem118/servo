@@ -16,26 +16,26 @@ use crate::dom::bindings::str::DOMString;
 use crate::dom::bindings::trace::trace_object;
 use crate::dom::windowproxy;
 use crate::script_runtime::JSContext as SafeJSContext;
-use js::conversions::{ToJSValConvertible};
+use js::conversions::ToJSValConvertible;
 use js::glue::{CallJitGetterOp, CallJitMethodOp, CallJitSetterOp, IsWrapper};
 use js::glue::{GetCrossCompartmentWrapper, JS_GetReservedSlot, WrapperNew};
 use js::glue::{UnwrapObjectDynamic, UnwrapObjectStatic, RUST_JSID_TO_INT, RUST_JSID_TO_STRING};
 use js::glue::{
     RUST_FUNCTION_VALUE_TO_JITINFO, RUST_JSID_IS_INT, RUST_JSID_IS_STRING, RUST_JSID_IS_VOID,
 };
-use js::jsapi::{AtomToLinearString, GetLinearStringLength, GetLinearStringCharAt};
 use js::jsapi::HandleId as RawHandleId;
 use js::jsapi::HandleObject as RawHandleObject;
 use js::jsapi::MutableHandleIdVector as RawMutableHandleIdVector;
 use js::jsapi::MutableHandleObject as RawMutableHandleObject;
+use js::jsapi::{AtomToLinearString, GetLinearStringCharAt, GetLinearStringLength};
 use js::jsapi::{CallArgs, DOMCallbacks, GetNonCCWObjectGlobal};
 use js::jsapi::{Heap, JSAutoRealm, JSContext, JS_FreezeObject};
+use js::jsapi::{JSAtom, JS_IsExceptionPending, JS_IsGlobalObject};
 use js::jsapi::{JSJitInfo, JSObject, JSTracer, JSWrapObjectCallbacks};
-use js::jsapi::{JS_EnumerateStandardClasses, JS_GetLatin1StringCharsAndLength};
-use js::jsapi::{JS_IsExceptionPending, JS_IsGlobalObject, JSAtom};
 use js::jsapi::{
-    JS_ResolveStandardClass, JS_DeprecatedStringHasLatin1Chars, ObjectOpResult, StringIsArrayIndex,
+    JS_DeprecatedStringHasLatin1Chars, JS_ResolveStandardClass, ObjectOpResult, StringIsArrayIndex,
 };
+use js::jsapi::{JS_EnumerateStandardClasses, JS_GetLatin1StringCharsAndLength};
 use js::jsval::{JSVal, UndefinedValue};
 use js::rust::wrappers::JS_DeletePropertyById;
 use js::rust::wrappers::JS_ForwardGetPropertyTo;
@@ -208,7 +208,9 @@ pub unsafe fn get_array_index_from_id(_cx: *mut JSContext, id: HandleId) -> Opti
     }
 
     let chars = [GetLinearStringCharAt(s, 0)];
-    let first_char = char::decode_utf16(chars.iter().cloned()).next().map_or('\0', |r| r.unwrap_or('\0'));
+    let first_char = char::decode_utf16(chars.iter().cloned())
+        .next()
+        .map_or('\0', |r| r.unwrap_or('\0'));
     if first_char < 'a' || first_char > 'z' {
         return None;
     }

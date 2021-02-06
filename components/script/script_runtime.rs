@@ -50,12 +50,12 @@ use js::jsapi::PromiseUserInputEventHandlingState;
 use js::jsapi::StreamConsumer as JSStreamConsumer;
 use js::jsapi::{BuildIdCharVector, DisableIncrementalGC, GCDescription, GCProgress};
 use js::jsapi::{Dispatchable as JSRunnable, Dispatchable_MaybeShuttingDown};
+use js::jsapi::{
+    GCReason, JSGCInvocationKind, JSGCStatus, JS_AddExtraGCRootsTracer,
+    JS_RequestInterruptCallback, JS_SetGCCallback,
+};
 use js::jsapi::{HandleObject, Heap, JobQueue};
 use js::jsapi::{JSContext as RawJSContext, JSTracer, SetDOMCallbacks, SetGCSliceCallback};
-use js::jsapi::{
-    JSGCInvocationKind, JSGCStatus, JS_AddExtraGCRootsTracer, JS_RequestInterruptCallback,
-    JS_SetGCCallback, GCReason
-};
 use js::jsapi::{JSGCMode, JSGCParamKey, JS_SetGCParameter, JS_SetGlobalJitCompilerOption};
 use js::jsapi::{
     JSJitCompilerOption, JS_SetOffthreadIonCompilationEnabled, JS_SetParallelParsingEnabled,
@@ -483,7 +483,11 @@ unsafe fn new_rt_and_cx_with_parent(
         false
     }
     SetDOMCallbacks(cx, &DOM_CALLBACKS);
-    SetPreserveWrapperCallbacks(cx, Some(empty_wrapper_callback), Some(empty_has_released_callback));
+    SetPreserveWrapperCallbacks(
+        cx,
+        Some(empty_wrapper_callback),
+        Some(empty_has_released_callback),
+    );
     // Pre barriers aren't working correctly at the moment
     DisableIncrementalGC(cx);
 

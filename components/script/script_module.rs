@@ -46,16 +46,16 @@ use js::jsapi::HandleObject;
 use js::jsapi::HandleValue as RawHandleValue;
 use js::jsapi::Value;
 use js::jsapi::{CompileModule1, ExceptionStackBehavior, FinishDynamicModuleImport};
+use js::jsapi::{DynamicImportStatus, SetModuleDynamicImportHook, SetScriptPrivateReferenceHooks};
 use js::jsapi::{GetModuleResolveHook, JSRuntime, SetModuleResolveHook};
 use js::jsapi::{GetRequestedModules, SetModuleMetadataHook};
 use js::jsapi::{Heap, JSContext, JS_ClearPendingException, SetModulePrivate};
 use js::jsapi::{JSAutoRealm, JSObject, JSString};
 use js::jsapi::{JS_DefineProperty4, JS_IsExceptionPending, JS_NewStringCopyN, JSPROP_ENUMERATE};
 use js::jsapi::{ModuleEvaluate, ModuleInstantiate};
-use js::jsapi::{SetModuleDynamicImportHook, SetScriptPrivateReferenceHooks, DynamicImportStatus};
 use js::jsval::{JSVal, PrivateValue, UndefinedValue};
-use js::rust::jsapi_wrapped::{GetRequestedModuleSpecifier, JS_GetPendingException};
 use js::rust::jsapi_wrapped::{GetArrayLength, JS_GetElement};
+use js::rust::jsapi_wrapped::{GetRequestedModuleSpecifier, JS_GetPendingException};
 use js::rust::transform_str_to_source_text;
 use js::rust::wrappers::JS_SetPendingException;
 use js::rust::CompileOptionsWrapper;
@@ -1002,11 +1002,19 @@ impl ModuleOwner {
                 DynamicImportStatus::Failed
             },
             (None, _, Some(execution_err)) => unsafe {
-                JS_SetPendingException(*cx, execution_err.handle(), ExceptionStackBehavior::Capture);
+                JS_SetPendingException(
+                    *cx,
+                    execution_err.handle(),
+                    ExceptionStackBehavior::Capture,
+                );
                 DynamicImportStatus::Failed
             },
             (None, Some(rethrow_error), _) => unsafe {
-                JS_SetPendingException(*cx, rethrow_error.handle(), ExceptionStackBehavior::Capture);
+                JS_SetPendingException(
+                    *cx,
+                    rethrow_error.handle(),
+                    ExceptionStackBehavior::Capture,
+                );
                 DynamicImportStatus::Failed
             },
             // do nothing if there's no errors

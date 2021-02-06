@@ -56,12 +56,12 @@ use js::glue::{IsWrapper, UnwrapObjectDynamic};
 use js::glue::{RUST_JSID_IS_INT, RUST_JSID_TO_INT};
 use js::glue::{RUST_JSID_IS_STRING, RUST_JSID_TO_STRING};
 use js::jsapi::{Heap, JSContext, JSObject, JSString};
-use js::jsapi::{IsWindowProxy, JS_NewStringCopyN, JS_DeprecatedStringHasLatin1Chars};
+use js::jsapi::{IsWindowProxy, JS_DeprecatedStringHasLatin1Chars, JS_NewStringCopyN};
 use js::jsapi::{
     JS_GetLatin1StringCharsAndLength, JS_GetTwoByteStringCharsAndLength, JS_IsExceptionPending,
 };
 use js::jsval::{ObjectValue, StringValue, UndefinedValue};
-use js::rust::wrappers::{JS_GetProperty, JS_HasProperty, IsArrayObject};
+use js::rust::wrappers::{IsArrayObject, JS_GetProperty, JS_HasProperty};
 use js::rust::{get_object_class, is_dom_class, is_dom_object, maybe_wrap_value, ToString};
 use js::rust::{HandleId, HandleObject, HandleValue, MutableHandleValue};
 use num_traits::Float;

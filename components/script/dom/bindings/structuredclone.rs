@@ -231,14 +231,14 @@ unsafe extern "C" fn report_error_callback(
     _cx: *mut JSContext,
     _errorid: u32,
     _closure: *mut ::std::os::raw::c_void,
-    _error_message: *const ::std::os::raw::c_char
+    _error_message: *const ::std::os::raw::c_char,
 ) {
 }
 
 unsafe extern "C" fn sab_cloned_callback(
     _cx: *mut JSContext,
     _receiving: bool,
-    _closure: *mut ::std::os::raw::c_void
+    _closure: *mut ::std::os::raw::c_void,
 ) -> bool {
     false
 }
