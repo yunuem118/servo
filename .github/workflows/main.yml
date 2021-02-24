@@ -29,9 +29,9 @@ jobs:
       - name: Cleanup
         run: |
           Remove-Item "$Env:Programfiles\Unity" -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable err
-Write-Host $err
-Remove-Item "$Env:Programfiles\Boost" -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable err
-Write-Host $err
+          Write-Host $err
+          Remove-Item "$Env:Programfiles\Boost" -Recurse -Force -ErrorAction SilentlyContinue -ErrorVariable err
+          Write-Host $err
       - name: Bootstrap
         run: |
           python -m pip install --upgrade pip virtualenv
